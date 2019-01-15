@@ -393,8 +393,6 @@ def addText(img, radius, direction, deviation, devDirection):
     # Deviation
     deviation_text = 'Off Center: ' + str(round(abs(deviation), 3)) + 'm' + ' to the ' + devDirection
     cv2.putText(img, deviation_text, (50, 200), cv2.FONT_HERSHEY_TRIPLEX, 0.8, (0,100, 200), 2, cv2.LINE_AA)
-    # Drawing the center line
-    cv2.line(img, (640, 720), (640, 600), (255, 0, 0), 5)
 
     return img
 #### END - FUNCTION TO ADD INFO TEXT TO FINAL IMAGE ############################
