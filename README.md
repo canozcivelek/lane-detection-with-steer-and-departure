@@ -85,6 +85,9 @@ Main function is where all these functions are called in the correct order and c
 
 ---
 
+#### Different phases of image processing
+![](https://imgur.com/AcH2w0l.gif)
+
 
 
 
