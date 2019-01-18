@@ -101,6 +101,15 @@ _Finalized Image_
 #### Phases of image processing
 ![](https://imgur.com/AcH2w0l.gif)
 
+---
+
+## Important Notes
+It should be noted that this project was created for demonstration purposes and its performance heavily relies on the video provided. The image processing part is kept very simple and can fail to identify lanes on poor or unstable light conditions. Lane lines must be clearly visible and tighter curves can cause problems with fitting curves and visualization. Self-improvement and educational purposes were the main idea behind the development of this project.
+
+## Acknowledgements
+During the making of this project, below presentation was found to be helpful and this project follows a similar approach to what is being shown in the presentation.
+Presentation: https://www.youtube.com/watch?v=VyLihutdsPk&t=1295s
+
 
 
 
