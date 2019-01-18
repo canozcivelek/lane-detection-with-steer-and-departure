@@ -53,6 +53,7 @@ is applied thresholding to get rid of unnecessary detections other than lanes, g
 Now that we have the image we want, a perspective warp is applied. Simply put, 4 points are put on the frame such that they surround only the area which lanes are present, then maps it onto another matrix to create a birdseye look at the lanes. This will enable us to work with a much refined image and help detecting lane curvatures. It should be noted that this operation is subject to change if another video is used. The predefined 4 points are calculated with this particular footage in mind. It should be retuned if another video that has a slightly different angled camera. 
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/process.jpg)
+_Different phases of the frame being processed (left), Birdseye view (right)_
 
 ---
 
@@ -71,6 +72,7 @@ After running the slide_window_search() function, this general_search() function
 With information provided by the previous two functions, np.polyfit() function is used again but with the values multiplied by xm_per_pix and ym_per_pix variables to convert them from pixel space to meter space. xm_per_pix is set as 3.7 / 720 which lane width as 3.7 meters and left & right lane base x coordinates obtained from histogram corresponds to lane width in pixels which turns out to be approximately 720 pixels. Similarly, ym_per_pix is set to 30 / 720 since the frame height is 720.
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/search.jpg)
+_slide_window_search function visualized (left), general_search function visualized (right)_
 
 ---
 
@@ -88,6 +90,7 @@ Finally by adding text on final image would complete the process and the informa
 Main function is where all these functions are called in the correct order and contains the loop to play video.
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/final.jpg)
+_Finalized Image_
 
 ---
 
