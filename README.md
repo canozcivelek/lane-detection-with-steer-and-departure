@@ -98,7 +98,7 @@ _Finalized Image_
 
 ---
 
-#### Different phases of image processing
+#### Phases of image processing
 ![](https://imgur.com/AcH2w0l.gif)
 
 
