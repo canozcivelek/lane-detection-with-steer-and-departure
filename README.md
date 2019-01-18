@@ -38,6 +38,8 @@ It should be noted that this project was developed on a Microsoft Windows 10 (64
 A video file contatining dashcam footage of a car cruising along the highway is provided for the script ```laneDetection.py```
 Following a modular approach, the Python script has several functions to perform lane detection.
 
+### Image Processing
+
 #### readVideo()
 First up is the readVideo() function to access the video file ```drive.mp4``` which is located in the same directory.
 
@@ -47,6 +49,10 @@ is applied thresholding to get rid of unnecessary detections other than lanes, g
 
 #### perspectiveWarp()
 Now that we have the image we want, a perspective warp is applied. Simply put, 4 points are put on the frame such that they surround only the area which lanes are present, then maps it onto another matrix to create a birdseye look at the lanes. This will enable us to work with a much refined image and help detecting lane curvatures.
+
+---
+
+### Lane Detection, Curve Fitting & Calculations
 
 #### plotHistogram()
 Plotting a for the bottom half of the image is an essential part to obtain the information of where exactly the left and right lanes start. Upon analyzing the histogram, one can see there is two distinct peaks where all the white pixels are detected. A very good indicator of where the left and right lanes begin. Since the histogram x coordinate represent the x coordinate of our analyzed frame, it means we now have x coordinates to start searching for the lanes.
@@ -60,6 +66,9 @@ After running the slide_window_search() function, this general_search() function
 #### measure_lane_curvature()
 With information provided by the previous two functions, np.polyfit() function is used again but with the values multiplied by xm_per_pix and ym_per_pix variables to convert them from pixel space to meter space. xm_per_pix is set as 3.7 / 720 which lane width as 3.7 meters and left & right lane base x coordinates obtained from histogram corresponds to lane width in pixels which turns out to be approximately 720 pixels. Similarly, ym_per_pix is set to 30 / 720 since the frame height is 720.
 
+---
+
+### Visualization and Main Fucntion
 #### draw_lane_lines()
 From here on, some methods are applied to visualize the detected lanes and other information to be displayed for the final image. This particular function takes detected lanes and fills the area inside them with a green color. It also visualizes the center of the lane by taking the mean of left_fitx and right_fitx lists and storing them in pts_mean variable, which then is represented by a yellowish color. This variable is also used to calculate the offset of the vehicle to either side or of it is centered in the lane.
 
@@ -71,6 +80,8 @@ Finally by adding text on final image would complete the process and the informa
 
 #### main()
 Main function is where all these functions are called in the correct order and contains the loop to play video.
+
+---
 
 
 
