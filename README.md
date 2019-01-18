@@ -57,6 +57,23 @@ A sliding window approach is used to detect lanes and their curvature. It uses i
 #### general_search()
 After running the slide_window_search() function, this general_search() function is now able to fill up an area around those detected lanes, again applies the second degree polyfit to the draw a yellow line which overlaps the lanes pretty well. This line will be used to measure radius of curvature which is essential in predicting steering angles.
 
+#### measure_lane_curvature()
+With information provided by the previous two functions, np.polyfit() function is used again but with the values multiplied by xm_per_pix and ym_per_pix variables to convert them from pixel space to meter space. xm_per_pix is set as 3.7 / 720 which lane width as 3.7 meters and left & right lane base x coordinates obtained from histogram corresponds to lane width in pixels which turns out to be approximately 720 pixels. Similarly, ym_per_pix is set to 30 / 720 since the frame height is 720.
+
+#### draw_lane_lines()
+From here on, some methods are applied to visualize the detected lanes and other information to be displayed for the final image. This particular function takes detected lanes and fills the area inside them with a green color. It also visualizes the center of the lane by taking the mean of left_fitx and right_fitx lists and storing them in pts_mean variable, which then is represented by a yellowish color. This variable is also used to calculate the offset of the vehicle to either side or of it is centered in the lane.
+
+#### offCenter()
+offCenter() function calculates uses pts_mean variable to calculate the offset value and show it in meter space.
+
+#### addText()
+Finally by adding text on final image would complete the process and the information displayed.
+
+#### main()
+Main function is where all these functions are called in the correct order and contains the loop to play video.
+
+
+
 
 
 
