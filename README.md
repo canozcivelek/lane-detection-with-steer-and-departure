@@ -62,6 +62,10 @@ _Different phases of the frame being processed (left), Birdseye view (right)_
 #### plotHistogram()
 Plotting a for the bottom half of the image is an essential part to obtain the information of where exactly the left and right lanes start. Upon analyzing the histogram, one can see there is two distinct peaks where all the white pixels are detected. A very good indicator of where the left and right lanes begin. Since the histogram x coordinate represent the x coordinate of our analyzed frame, it means we now have x coordinates to start searching for the lanes.
 
+![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/histogram.png)
+
+_Histogram showing peak values of white pixels_
+
 #### slide_window_search()
 A sliding window approach is used to detect lanes and their curvature. It uses information from previous histogram function and puts a box with lane at the center. Then puts another box on top based on the positions of white pixels from the previous box and places itself accordingly all the way to the top of the frame. This way, we have the information to play around with and make some calculations. Then, a second degree polynomial fit is performed to have a curve fit in pixel space.
 
@@ -70,10 +74,6 @@ After running the slide_window_search() function, this general_search() function
 
 #### measure_lane_curvature()
 With information provided by the previous two functions, np.polyfit() function is used again but with the values multiplied by xm_per_pix and ym_per_pix variables to convert them from pixel space to meter space. xm_per_pix is set as 3.7 / 720 which lane width as 3.7 meters and left & right lane base x coordinates obtained from histogram corresponds to lane width in pixels which turns out to be approximately 720 pixels. Similarly, ym_per_pix is set to 30 / 720 since the frame height is 720.
-
-![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/histogram.png)
-
-_Histogram showing peak values of white pixels_
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/search.jpg)
 _slide_window_search function visualized (left), general_search function visualized (right)_
