@@ -20,7 +20,9 @@ This project follows a simplistic approach in terms of how to run it. Only 2 fil
 * [drive](drive) is the video file on which image processing is performed.
 
 Simply clone this repository to desired path by launching command prompt and running
-```git clone https://github.com/canozcivelek/lane-detection-with-steer-and-departure.git```
+```
+git clone https://github.com/canozcivelek/lane-detection-with-steer-and-departure.git
+```
 Make sure both files are in the same directory.
 
 #### Prerequisites
