@@ -71,6 +71,9 @@ After running the slide_window_search() function, this general_search() function
 #### measure_lane_curvature()
 With information provided by the previous two functions, np.polyfit() function is used again but with the values multiplied by xm_per_pix and ym_per_pix variables to convert them from pixel space to meter space. xm_per_pix is set as 3.7 / 720 which lane width as 3.7 meters and left & right lane base x coordinates obtained from histogram corresponds to lane width in pixels which turns out to be approximately 720 pixels. Similarly, ym_per_pix is set to 30 / 720 since the frame height is 720.
 
+![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/histogram.png)
+_Histogram showing peak values of white pixels_
+
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/search.jpg)
 _slide_window_search function visualized (left), general_search function visualized (right)_
 
