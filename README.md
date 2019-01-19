@@ -68,7 +68,7 @@ _Histogram showing peak values of white pixels_
 A sliding window approach is used to detect lanes and their curvature. It uses information from previous histogram function and puts a box with lane at the center. Then puts another box on top based on the positions of white pixels from the previous box and places itself accordingly all the way to the top of the frame. This way, we have the information to make some calculations. Then, a second degree polynomial fit is performed to have a curve fit in pixel space.
 
 #### general_search()
-After running the slide_window_search() function, this general_search() function is now able to fill up an area around those detected lanes, again applies the second degree polyfit to the draw a yellow line which overlaps the lanes pretty well. This line will be used to measure radius of curvature which is essential in predicting steering angles.
+After running the slide_window_search() function, this general_search() function is now able to fill up an area around those detected lanes, again applies the second degree polyfit to then draw a yellow line which overlaps the lanes pretty accurately. This line will be used to measure radius of curvature which is essential in predicting steering angles.
 
 #### measure_lane_curvature()
 With information provided by the previous two functions, np.polyfit() function is used again but with the values multiplied by xm_per_pix and ym_per_pix variables to convert them from pixel space to meter space. xm_per_pix is set as 3.7 / 720 which lane width as 3.7 meters and left & right lane base x coordinates obtained from histogram corresponds to lane width in pixels which turns out to be approximately 720 pixels. Similarly, ym_per_pix is set to 30 / 720 since the frame height is 720.
