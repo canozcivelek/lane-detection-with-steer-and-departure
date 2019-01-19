@@ -94,6 +94,7 @@ Finally by adding text on final image would complete the process and the informa
 Main function is where all these functions are called in the correct order and contains the loop to play video.
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/final.jpg)
+
 _Finalized Image_
 
 ---
