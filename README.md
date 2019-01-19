@@ -14,8 +14,8 @@ autonomous / semi-autonomous vehicles. This feature is responsible for detecting
 ## Get This Project Up and Running
 
 This project follows a simplistic approach in terms of how to run it. Only 2 files are needed in order to get it running.
-* [laneDetection](laneDetection) is the only file to perform image processing nad detecting lanes
-* [drive](drive) is the video file on which image processing is performed.
+* [laneDetection](laneDetection.py) is the only file to perform image processing nad detecting lanes
+* [drive](drive.mp4) is the video file on which image processing is performed.
 
 Simply clone this repository to desired path by launching command prompt and running
 ```
