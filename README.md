@@ -65,7 +65,7 @@ Plotting a histogram for the bottom half of the image is an essential part to ob
 _Histogram showing peak values of white pixels_
 
 #### slide_window_search()
-A sliding window approach is used to detect lanes and their curvature. It uses information from previous histogram function and puts a box with lane at the center. Then puts another box on top based on the positions of white pixels from the previous box and places itself accordingly all the way to the top of the frame. This way, we have the information to play around with and make some calculations. Then, a second degree polynomial fit is performed to have a curve fit in pixel space.
+A sliding window approach is used to detect lanes and their curvature. It uses information from previous histogram function and puts a box with lane at the center. Then puts another box on top based on the positions of white pixels from the previous box and places itself accordingly all the way to the top of the frame. This way, we have the information to make some calculations. Then, a second degree polynomial fit is performed to have a curve fit in pixel space.
 
 #### general_search()
 After running the slide_window_search() function, this general_search() function is now able to fill up an area around those detected lanes, again applies the second degree polyfit to the draw a yellow line which overlaps the lanes pretty well. This line will be used to measure radius of curvature which is essential in predicting steering angles.
