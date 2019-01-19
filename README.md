@@ -50,7 +50,7 @@ This function performs some processing techniques to isolate white lane lines an
 is applied thresholding to get rid of unnecessary detections other than lanes, gets blurred and finally edges are extracted with cv2.Canny() function.
 
 #### perspectiveWarp()
-Now that we have the image we want, a perspective warp is applied. 4 points are placed on the frame such that they surround only the area which lanes are present [like so](Images/warp.jpg) is how my setup looks like, then maps it onto another matrix to create a birdseye look at the lanes. This will enable us to work with a much refined image and help detecting lane curvatures. It should be noted that this operation is subject to change if another video is used. The predefined 4 points are calculated with this particular footage in mind. It should be retuned if another video that has a slightly different angled camera. 
+Now that we have the image we want, a perspective warp is applied. 4 points are placed on the frame such that they surround only the area which lanes are present [(like so)](Images/warp.jpg), then maps it onto another matrix to create a birdseye look at the lanes. This will enable us to work with a much refined image and help detecting lane curvatures. It should be noted that this operation is subject to change if another video is used. The predefined 4 points are calculated with this particular footage in mind. It should be retuned if another video that has a slightly different angled camera. 
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/process.jpg)
 _Different phases of the frame being processed (left), Birdseye view (right)_
