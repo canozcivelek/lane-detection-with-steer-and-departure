@@ -50,7 +50,7 @@ This function performs some processing techniques to isolate white lane lines an
 is applied thresholding to get rid of unnecessary detections other than lanes, gets blurred and finally edges are extracted with cv2.Canny() function.
 
 #### perspectiveWarp()
-Now that we have the image we want, a perspective warp is applied. Simply put, 4 points are put on the frame such that they surround only the area which lanes are present, then maps it onto another matrix to create a birdseye look at the lanes. This will enable us to work with a much refined image and help detecting lane curvatures. It should be noted that this operation is subject to change if another video is used. The predefined 4 points are calculated with this particular footage in mind. It should be retuned if another video that has a slightly different angled camera. 
+Now that we have the image we want, a perspective warp is applied. 4 points are placed on the frame such that they surround only the area which lanes are present, then maps it onto another matrix to create a birdseye look at the lanes. This will enable us to work with a much refined image and help detecting lane curvatures. It should be noted that this operation is subject to change if another video is used. The predefined 4 points are calculated with this particular footage in mind. It should be retuned if another video that has a slightly different angled camera. 
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/process.jpg)
 _Different phases of the frame being processed (left), Birdseye view (right)_
@@ -60,7 +60,7 @@ _Different phases of the frame being processed (left), Birdseye view (right)_
 ### Lane Detection, Curve Fitting & Calculations
 
 #### plotHistogram()
-Plotting a for the bottom half of the image is an essential part to obtain the information of where exactly the left and right lanes start. Upon analyzing the histogram, one can see there is two distinct peaks where all the white pixels are detected. A very good indicator of where the left and right lanes begin. Since the histogram x coordinate represent the x coordinate of our analyzed frame, it means we now have x coordinates to start searching for the lanes.
+Plotting a histogram for the bottom half of the image is an essential part to obtain the information of where exactly the left and right lanes start. Upon analyzing the histogram, one can see there is two distinct peaks where all the white pixels are detected. A very good indicator of where the left and right lanes begin. Since the histogram x coordinate represent the x coordinate of our analyzed frame, it means we now have x coordinates to start searching for the lanes.
 
 ![alt text](https://github.com/canozcivelek/lane-detection-with-steer-and-departure/blob/master/Images/histogram.png)
 
