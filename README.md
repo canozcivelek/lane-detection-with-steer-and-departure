@@ -83,10 +83,10 @@ _slide_window_search function visualized (left), general_search function visuali
 From here on, some methods are applied to visualize the detected lanes and other information to be displayed for the final image. This particular function takes detected lanes and fills the area inside them with a green color. It also visualizes the center of the lane by taking the mean of left_fitx and right_fitx lists and storing them in pts_mean variable, which then is represented by a yellowish color. This variable is also used to calculate the offset of the vehicle to either side or of it is centered in the lane.
 
 #### offCenter()
-offCenter() function calculates uses pts_mean variable to calculate the offset value and show it in meter space.
+offCenter() function uses pts_mean variable to calculate the offset value and show it in meter space.
 
 #### addText()
-Finally by adding text on final image would complete the process and the information displayed.
+Finally by adding text on the final image would complete the process and the information displayed.
 
 #### main()
 Main function is where all these functions are called in the correct order and contains the loop to play video.
