@@ -21,7 +21,7 @@ Simply clone this repository to desired path by launching command prompt and run
 ```
 git clone https://github.com/canozcivelek/lane-detection-with-steer-and-departure.git
 ```
-Make sure both files are in the same directory.
+Make sure both files (laneDetection.py & drive.mp4) are in the same directory.
 
 #### Prerequisites
 To successfully run the project, it is required to have the following software and their respective versions installed:
