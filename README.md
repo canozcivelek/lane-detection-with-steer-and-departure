@@ -105,6 +105,9 @@ _Finalized Image_
 ## Important Notes
 It should be noted that this project was created for demonstration purposes and its performance heavily relies on the video provided. The image processing part is kept very simple and can fail to identify lanes on poor or unstable light conditions. Lane lines must be clearly visible and tighter curves can cause problems with fitting curves and visualization. Self-improvement and educational purposes were the main idea behind the development of this project.
 
+## Further Notes
+If we were to compare this project to one of the production grade versions, things get significantly more sophisticated as error rates should be extremely low and the system should be able to adapt to various situations. For example, unstable light conditions where there is huge amount of change in light density, or weather conditions that has impact on road surface visibility etc. Many variables are hardcoded in this project where any change could lead this particular setup to failure. That's why methods like machine learning should be used to make this system more adaptive and less prone to fail in real life conditions.
+
 ## Acknowledgements
 During the making of this project, below presentation was found to be helpful and this project follows a similar approach to what is being shown in the presentation.
 
