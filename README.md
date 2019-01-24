@@ -100,7 +100,7 @@ _Finalized Image_
 #### Phases of image processing
 ![](https://imgur.com/AcH2w0l.gif)
 
-#### Here is another video of this system controlling an RC cars steering
+#### Here is another clip of this system controlling an RC car's steering
 ![](https://imgur.com/VvN80jL.gif)
 
 ---
