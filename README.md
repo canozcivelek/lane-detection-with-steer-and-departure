@@ -1,3 +1,14 @@
+## Updates and New Features (2025)
+
+- The entire codebase has been updated for compatibility with the latest Python and library versions.
+- Added support for detecting different lane colors.
+- Perspective points for the video are now adjustable and can be easily modified.
+- The four points used for perspective transformation are marked with small red dots on the screen.
+- Added support for capturing video directly from the camera.
+- All resources and workflow have been adapted for 1280x720 resolution compatibility.
+
+---
+
 # Lane Detection with Steer Assist and Lane Departure Monitoring
 
 ## Project Description & Objective

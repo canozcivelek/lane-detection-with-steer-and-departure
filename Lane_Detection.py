@@ -1,8 +1,8 @@
 ################################################################################
 ######## LANE DETECTION PROJECT ################################################
 ################################################################################
-# BY:           CAN OZCIVELEK
-# DATE:         DECEMBER 2018
+# BY:           Bilal Sinav
+# DATE:         18.06.2025
 #
 # DESCRIPTION:  THIS  PROJECT WAS CREATED  TO DEMONSTRATE HOW  A  LANE DETECTION
 #               SYSTEM WORKS  ON CARS EQUIPPED WITH A FRONT  FACING CAMERA. WITH
@@ -38,8 +38,9 @@ CWD_PATH = os.getcwd()
 #### START - FUNCTION TO READ AN INPUT IMAGE ###################################
 def readVideo():
 
-    # Read input video from current working directory
-    inpImage = cv2.VideoCapture(os.path.join(CWD_PATH, 'drive.mp4'))
+    # Read input video from current working directory or from webcam
+    # inpImage = cv2.VideoCapture(1)  
+    inpImage = cv2.VideoCapture(os.path.join(CWD_PATH, 'V4.mp4'))
 
     return inpImage
 #### END - FUNCTION TO READ AN INPUT IMAGE #####################################
@@ -53,9 +54,16 @@ def processImage(inpImage):
 
     # Apply HLS color filtering to filter out white lane lines
     hls = cv2.cvtColor(inpImage, cv2.COLOR_BGR2HLS)
-    lower_white = np.array([0, 160, 10])
-    upper_white = np.array([255, 255, 255])
-    mask = cv2.inRange(inpImage, lower_white, upper_white)
+
+    # White lane lines
+    #lower_colour = np.array([0, 160, 10])
+    #upper_colour = np.array([255, 255, 255])
+
+    # Yellow lane lines
+    lower_colour = np.array([120, 100, 100])
+    upper_colour = np.array([150, 255, 255])
+
+    mask = cv2.inRange(inpImage, lower_colour, upper_colour)
     hls_result = cv2.bitwise_and(inpImage, inpImage, mask = mask)
 
     # Convert image to grayscale, apply threshold, blur & extract edges
@@ -80,22 +88,17 @@ def processImage(inpImage):
 
 ################################################################################
 #### START - FUNCTION TO APPLY PERSPECTIVE WARP ################################
-def perspectiveWarp(inpImage):
+def perspectiveWarp(inpImage, src):
 
     # Get image size
     img_size = (inpImage.shape[1], inpImage.shape[0])
 
-    # Perspective points to be warped
-    src = np.float32([[590, 440],
-                      [690, 440],
-                      [200, 640],
-                      [1000, 640]])
 
     # Window to be shown
-    dst = np.float32([[200, 0],
+    dst = np.array([[200, 0],
                       [1200, 0],
                       [200, 710],
-                      [1200, 710]])
+                      [1200, 710]], dtype=np.float32)
 
     # Matrix to warp the image for birdseye window
     matrix = cv2.getPerspectiveTransform(src, dst)
@@ -127,7 +130,7 @@ def plotHistogram(inpImage):
 
     histogram = np.sum(inpImage[inpImage.shape[0] // 2:, :], axis = 0)
 
-    midpoint = np.int(histogram.shape[0] / 2)
+    midpoint = np.int32(histogram.shape[0] / 2)
     leftxBase = np.argmax(histogram[:midpoint])
     rightxBase = np.argmax(histogram[midpoint:]) + midpoint
 
@@ -148,13 +151,13 @@ def slide_window_search(binary_warped, histogram):
 
     # Find the start of left and right lane lines using histogram info
     out_img = np.dstack((binary_warped, binary_warped, binary_warped)) * 255
-    midpoint = np.int(histogram.shape[0] / 2)
+    midpoint = np.int32(histogram.shape[0] / 2)
     leftx_base = np.argmax(histogram[:midpoint])
     rightx_base = np.argmax(histogram[midpoint:]) + midpoint
 
     # A total of 9 windows will be used
     nwindows = 9
-    window_height = np.int(binary_warped.shape[0] / nwindows)
+    window_height = np.int32(binary_warped.shape[0] / nwindows)
     nonzero = binary_warped.nonzero()
     nonzeroy = np.array(nonzero[0])
     nonzerox = np.array(nonzero[1])
@@ -173,10 +176,8 @@ def slide_window_search(binary_warped, histogram):
         win_xleft_high = leftx_current + margin
         win_xright_low = rightx_current - margin
         win_xright_high = rightx_current + margin
-        cv2.rectangle(out_img, (win_xleft_low, win_y_low), (win_xleft_high, win_y_high),
-        (0,255,0), 2)
-        cv2.rectangle(out_img, (win_xright_low,win_y_low), (win_xright_high,win_y_high),
-        (0,255,0), 2)
+        cv2.rectangle(out_img, (int(win_xleft_low), int(win_y_low)), (int(win_xleft_high), int(win_y_high)), (0, 255, 0), 2)
+        cv2.rectangle(out_img, (int(win_xright_low), int(win_y_low)), (int(win_xright_high), int(win_y_high)), (0, 255, 0), 2)
         good_left_inds = ((nonzeroy >= win_y_low) & (nonzeroy < win_y_high) &
         (nonzerox >= win_xleft_low) &  (nonzerox < win_xleft_high)).nonzero()[0]
         good_right_inds = ((nonzeroy >= win_y_low) & (nonzeroy < win_y_high) &
@@ -184,9 +185,9 @@ def slide_window_search(binary_warped, histogram):
         left_lane_inds.append(good_left_inds)
         right_lane_inds.append(good_right_inds)
         if len(good_left_inds) > minpix:
-            leftx_current = np.int(np.mean(nonzerox[good_left_inds]))
+            leftx_current = int(np.mean(nonzerox[good_left_inds]))
         if len(good_right_inds) > minpix:
-            rightx_current = np.int(np.mean(nonzerox[good_right_inds]))
+            rightx_current = int(np.mean(nonzerox[good_right_inds]))
     #### END - Loop to iterate through windows and search for lane lines #######
 
     left_lane_inds = np.concatenate(left_lane_inds)
@@ -268,8 +269,8 @@ def general_search(binary_warped, left_fit, right_fit):
     right_line_window2 = np.array([np.flipud(np.transpose(np.vstack([right_fitx+margin, ploty])))])
     right_line_pts = np.hstack((right_line_window1, right_line_window2))
 
-    cv2.fillPoly(window_img, np.int_([left_line_pts]), (0, 255, 0))
-    cv2.fillPoly(window_img, np.int_([right_line_pts]), (0, 255, 0))
+    cv2.fillPoly(window_img, [np.array(left_line_pts, dtype=np.int32)], (0, 255, 0))
+    cv2.fillPoly(window_img, [np.array(right_line_pts, dtype=np.int32)], (0, 255, 0))
     result = cv2.addWeighted(out_img, 1, window_img, 0.3, 0)
 
     # plt.imshow(result)
@@ -345,8 +346,8 @@ def draw_lane_lines(original_image, warped_image, Minv, draw_info):
     mean_x = np.mean((left_fitx, right_fitx), axis=0)
     pts_mean = np.array([np.flipud(np.transpose(np.vstack([mean_x, ploty])))])
 
-    cv2.fillPoly(color_warp, np.int_([pts]), (0, 255, 0))
-    cv2.fillPoly(color_warp, np.int_([pts_mean]), (0, 255, 255))
+    cv2.fillPoly(color_warp, [np.array(pts, dtype=np.int32)], (0, 255, 0))
+    cv2.fillPoly(color_warp, [np.array(pts_mean, dtype=np.int32)], (0, 255, 255))
 
     newwarp = cv2.warpPerspective(color_warp, Minv, (original_image.shape[1], original_image.shape[0]))
     result = cv2.addWeighted(original_image, 1, newwarp, 0.3, 0)
@@ -420,56 +421,72 @@ while True:
 
     _, frame = image.read()
 
+    # Frame should be resized to 1280x720 for better processing 
+    frame = cv2.resize(frame, (1280, 720))
+    
+    # These points are used to show the perspective warp
+    src = np.array([[400, 440],
+                     [780, 440],
+                      [200, 640],
+                      [1000, 640]], dtype=np.float32)
+    for point in src:
+        cv2.circle(frame, (int(point[0]), int(point[1])), radius=5, color=(0, 0, 255), thickness=-1)
 
-    # Apply perspective warping by calling the "perspectiveWarp()" function
-    # Then assign it to the variable called (birdView)
-    # Provide this function with:
-    # 1- an image to apply perspective warping (frame)
-    birdView, birdViewL, birdViewR, minverse = perspectiveWarp(frame)
-
-
-    # Apply image processing by calling the "processImage()" function
-    # Then assign their respective variables (img, hls, grayscale, thresh, blur, canny)
-    # Provide this function with:
-    # 1- an already perspective warped image to process (birdView)
-    img, hls, grayscale, thresh, blur, canny = processImage(birdView)
-    imgL, hlsL, grayscaleL, threshL, blurL, cannyL = processImage(birdViewL)
-    imgR, hlsR, grayscaleR, threshR, blurR, cannyR = processImage(birdViewR)
-
-
-    # Plot and display the histogram by calling the "get_histogram()" function
-    # Provide this function with:
-    # 1- an image to calculate histogram on (thresh)
-    hist, leftBase, rightBase = plotHistogram(thresh)
-    # print(rightBase - leftBase)
-    plt.plot(hist)
-    # plt.show()
+    try:
+            # Apply perspective warping by calling the "perspectiveWarp()" function
+        # Then assign it to the variable called (birdView)
+        # Provide this function with:
+        # 1- an image to apply perspective warping (frame)
+        birdView, birdViewL, birdViewR, minverse = perspectiveWarp(frame, src)
 
 
-    ploty, left_fit, right_fit, left_fitx, right_fitx = slide_window_search(thresh, hist)
-    plt.plot(left_fit)
-    # plt.show()
+        # Apply image processing by calling the "processImage()" function
+        # Then assign their respective variables (img, hls, grayscale, thresh, blur, canny)
+        # Provide this function with:
+        # 1- an already perspective warped image to process (birdView)
+        img, hls, grayscale, thresh, blur, canny = processImage(birdView)
+        imgL, hlsL, grayscaleL, threshL, blurL, cannyL = processImage(birdViewL)
+        imgR, hlsR, grayscaleR, threshR, blurR, cannyR = processImage(birdViewR)
 
 
-    draw_info = general_search(thresh, left_fit, right_fit)
-    # plt.show()
+        # Plot and display the histogram by calling the "get_histogram()" function
+        # Provide this function with:
+        # 1- an image to calculate histogram on (thresh)
+        hist, leftBase, rightBase = plotHistogram(thresh)
+        # print(rightBase - leftBase)
+        plt.plot(hist)
+        # plt.show()
 
 
-    curveRad, curveDir = measure_lane_curvature(ploty, left_fitx, right_fitx)
+        ploty, left_fit, right_fit, left_fitx, right_fitx = slide_window_search(thresh, hist)
+        plt.plot(left_fit)
+        # plt.show()
 
 
-    # Filling the area of detected lanes with green
-    meanPts, result = draw_lane_lines(frame, thresh, minverse, draw_info)
+        draw_info = general_search(thresh, left_fit, right_fit)
+        # plt.show()
 
 
-    deviation, directionDev = offCenter(meanPts, frame)
+        curveRad, curveDir = measure_lane_curvature(ploty, left_fitx, right_fitx)
 
 
-    # Adding text to our final image
-    finalImg = addText(result, curveRad, curveDir, deviation, directionDev)
+        # Filling the area of detected lanes with green
+        meanPts, result = draw_lane_lines(frame, thresh, minverse, draw_info)
 
-    # Displaying final image
-    cv2.imshow("Final", finalImg)
+
+        deviation, directionDev = offCenter(meanPts, frame)
+
+
+        # Adding text to our final image
+        finalImg = addText(result, curveRad, curveDir, deviation, directionDev)
+
+        # Displaying final image
+        cv2.imshow("Final", finalImg)
+    except TypeError as e:
+        cv2.imshow("Final", frame)
+        
+
+
 
 
     # Wait for the ENTER key to be pressed to stop playback
@@ -486,38 +503,3 @@ cv2.destroyAllWindows()
 ################################################################################
 ######## END - MAIN FUNCTION ###################################################
 ################################################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-##
